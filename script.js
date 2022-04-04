@@ -1,5 +1,10 @@
 const yourShip = document.querySelector('.player-shooter');
 const playArea = document.querySelector('#main-play-area');
+const aliensImg = ['./img/monster-1.png','./img/monster-2.png','./img/monster-3.png']
+
+
+
+
 //Movimento e tiro da nave
 function flyShip(event){
     if(event.key === 'ArrowUp'){
@@ -68,8 +73,55 @@ function moveLaser(laser){
     }, 10);
 }
 
+// Funcão de criação de inimigos
+function createAliens(){
+    let newAlien = document.createElement('img');
+    let alienSprite = aliensImg[Math.floor(Math.random() * aliensImg.length)]; // Sorteio de imagem
+    newAlien.scr = alienSprite;
+    newAlien.classList.add('alien');
+    newAlien.classList.add('alien-transition');
+    newAlien.style.left = '370px';
+    newAlien.style.top = `${Math.floor(Math.random() * 330) +30}px`;
+    playArea.appendChild(newAlien);
+    moveAlien(newAlien);
+}
 
+// Função de movimento de inimigo
+function moveAlien(alien){
+    let moveAlienInterval = setTimeout(() => {
+        let xPosition = parseInt(window.getComputedStyle(alien).getPropertyValue('left'));
+        if (xPosition <= 50) {
+            if(Array.from(alien.classList).includes('dead-alien')){
+                alien.remove();
+            } else {
+                //gameOver();
+            }
+        } else {
+            alien.style.left = `${xPosition - 4}px`
+        }
+    }, 30);
+}
 
+// Função para colisão
+function checkLaserColision(laser, alien){
+    let laserTop = parseInt(laser.style.top);
+    let laserLeft = parseInt(laser.style.left);
+    let laserBottom = laserTop - 20;
+    let alienTop = parseInt(alien.style.top);
+    let alienLeft = parseInt(alien.style.left);
+    let alienBottom = alienTop - 30;
+
+    if(laserLeft != 340 && laserLeft + 40 >= alienLeft) {
+        if(laserTop <= alienTop && laserTop >= alienBottom){
+            return true;
+        } else {
+            return false;
+        }
+    } else { 
+        return false;
+    }
+
+}
 
 
 
