@@ -28,7 +28,7 @@ function flyShip(event){
          return
      } else {
         let position = parseInt(topPosition);
-        position -= 50;
+        position -= 25;
         yourShip.style.top = `${position}px`;
      }
  }
@@ -40,7 +40,7 @@ function flyShip(event){
          return
      } else {
         let position = parseInt(topPosition);
-        position += 50;
+        position += 25;
         yourShip.style.top = `${position}px`;
      }
  }
